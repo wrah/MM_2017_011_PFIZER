@@ -88,7 +88,7 @@ var buildImages = function(directory)
 		directory = "web/images";
 	}
 
-	return gulp.src("assets/images/**/*.{jpg,jpeg,png,gif}")
+	return gulp.src("assets/images/**/*.{jpg,jpeg,png,gif,svg}")
 		.pipe(debug({"title": "images"}))
 		.pipe(plumber())
 		.pipe(gulp.dest(directory))
@@ -132,7 +132,7 @@ gulp.task("watch", ["scripts", "styles"], function() {
 	gulp.watch("assets/pdf/**/*.pdf", ["pdf"]);
 	gulp.watch("templates/**/*.html.twig", ["twig"]);
 	gulp.watch("assets/fonts/**/*.{jsvg,ttf,eot,woff}", ["fonts"]);
-	gulp.watch("assets/images/**/*.{jpg,jpeg,png,gif}", ["images"]);
+	gulp.watch("assets/images/**/*.{jpg,jpeg,png,gif,svg}", ["images"]);
 });
 
 gulp.task("freeze", function() {

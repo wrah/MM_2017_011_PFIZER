@@ -76,8 +76,8 @@ class MainController implements ControllerProviderInterface
     $mc2mRubricId = "2000";
     if(!$gmcHeader)
     {
-        $header = file_get_contents("http://www.marieclaire.fr/chunk/top/". $mc2mRubricId);
-        $footer = file_get_contents("http://www.marieclaire.fr/chunk/bottom/". $mc2mRubricId);
+        $header = file_get_contents("http://www.magicmaman.com/chunk/top/". $mc2mRubricId);
+        $footer = file_get_contents("http://www.magicmaman.com/chunk/bottom/". $mc2mRubricId);
     }
     else
     {

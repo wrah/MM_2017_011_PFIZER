@@ -3,10 +3,128 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<div id="op-popIn">
-  <header>
-    <img src="{{app.request.basepath}}/images/header.png" alt="" />
+  <header class="page-header">
+    <div class="container">
+      <h1 class="page-header__title">La méningite à méningocoque C</h1>
+      <h2 class="page-header__subtitle">c’est quoi&nbsp;?</h2>
+    </div>
   </header>
-  {% include "partials/form-partial.html.twig" %}
-</div>
+  <main class="site-content">
+    <section class="intro">
+      <div class="container">
+        <div class="row">
+          <div class="intro__left">
+            Une raideur de la nuque&nbsp;?
+            Une forte fièvre&nbsp;?
+            Des maux de tête&nbsp;? Des vomissements&nbsp;?
+            Une difficulté à supporter la lumière&nbsp;? 
+            Un comportement perturbé&nbsp;?
+            <div class="highlight">
+              <span>Des courbatures&nbsp;?</span>
+              <img src="{{app.request.images}}/images/alert-sign.png" alt="">
+              <br>Ce sont autant de signes qui peuvent faire penser à une méningite<sup>1,2</sup>.
+            </div>
+          </div>
+
+          <div class="intro__right">
+            La méningite est une infection rare du liquide et des membranes
+            qui protègent le cerveau et la moelle épinière. Elle est due à
+            une bactérie, qu’on appelle méningocoque C<sup>2</sup>.
+
+            <h2 class="intro__title">Il s’agit d’une maladie grave<sup>1</sup>, elle peut dans des cas plus rares :</h2>
+
+            <ul class="list list--arrow">
+              <li>être mortelle dans plus d’1 cas sur 10<sup>4</sup>.</li>
+              <li>présenter des complications : infection généralisée, éruption hémorragique, état de choc cardiovasculaire<sup>1</sup>.</li>
+              <li>laisser des séquelles : perte de la vue, surdité, difficultés pour apprendre, membres amputés<sup>1,4</sup>.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="doute">
+      <div class="container">
+        <div class="doute__content">
+          <h2 class="doute__title">En cas de doute, que faire&nbsp;?</h2>
+          Un diagnostic peut être posé grâce à l’examen clinique suivi d’une ponction
+          lombaire. Ensuite, un traitement antibiotique doit être mis en place dès que
+          possible<sup>1</sup>. Si l’un des signes d’alerte apparaît (une fièvre mal supportée et/ou
+          plusieurs taches rouges ou violacées – purpura – n’importe où sur la peau),
+          ou au moindre doute, contactez en urgence le 15 ou votre médecin traitant<sup>2</sup>.
+        </div>
+        <img src="{{app.request.images}}/images/teen-group.png" alt="" class="doute__img">
+      </div>
+
+      <div class="doute__footer">
+        <div class="doute__footer__content">
+          <img src="{{app.request.images}}/images/alert-phone.png" alt="" class="doute__footer__img">
+          <h2 class="doute__footer__title">
+            En cas de doute, contactez le 15<br> ou votre médecin traitant
+            <small>pour recevoir en urgence un avis médical<sup>2</sup>.</small>
+          </h2>
+        </div>
+      </div>
+    </section>
+
+    <section class="bebe">
+      <div class="container">
+        <div class="bebe__content">
+          <div class="bebe__onmadit">
+            <h2 class="bebe__title">On m’a dit que les bébés étaient les plus à risque. Est-ce vrai&nbsp;?</h2>
+            <p>Personne n’est à l’abri de contracter une méningite C.
+              Mais, il a, en effet, été observé qu’elle frappe plus souvent les jeunes enfants de moins de 5 ans, les adolescents et les jeunes adultes (15-25 ans)<sup>3</sup>.</p>
+          </div>
+          <div class="bebe__sep"></div>
+          <div class="bebe__left">
+            <div class="bebe__transmission">
+              <h2 class="bebe__title">Quel est le mode de transmission de la maladie&nbsp;?</h2>
+              <p>Le microbe est très fragile<sup>2</sup>.<br>
+                Un contact étroit et prolongé<br> favorise la propagation de la<br> maladie<sup>1</sup>.<br>
+                La maladie est silencieuse pendant 4&nbsp;jours en moyenne (l’incubation peut être comprise entre 2 à<br> 10 jours)
+                bien avant l’apparition <br>des symptômes<sup>1</sup>.</p>
+            </div>
+          </div>
+          <div class="bebe__right">
+            <aside class="bebe__block">
+              <h2 class="bebe__block__title">Toutefois,<br> sachez<br> qu’un vaccin<br> existe</h2>
+              <div class="bebe__block__content">
+                <b>La vaccination contre le méningocoque C est recommandée :</b>
+                <ul class="list list--arrow">
+                  <li>
+                    Chez les nourrissons* : avec <b>1 dose à 5 mois + 1 rappel à 12 mois</b> (co-administration possible avec le vaccin Rougeole-Oreillons-Rubéole).<br>
+                    <b>Respecter un intervalle minimum de 6 mois entre les 2 doses<sup>**</sup></b>.
+                  </li>
+                  <li>Chez les enfants de plus de 12 mois et jusqu’à 24 ans révolus non préalablement vaccinés : <b>avec 1 dose unique</b>.</li>
+                </ul>
+                <small>*de manière transitoire, en l’absence d’immunité de groupe du fait d’une couverture vaccinale insuffisante chez les enfants, adolescents et adultes jeunes.</small>
+                <small>** La vaccination contre les infections invasives à méningocoque de sérogroupe C doit être réalisée avec le vaccin indiqué et recommandé officiellement.</small>
+              </div>
+            </aside>
+          </div>
+          <div style="clear: both;">
+            Information communiquée par l’entreprise de santé Pfizer.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="footnote">
+      <div class="container">
+        <h2 class="footnote__title">Bibliographie</h2>
+        <p>1. OMS. Méningite à méningocoques. Aide mémoire n°141. Février 2015.</p>
+        <p>2. INPES. Méningites et septicémies à méningocoque. Disponible sur <a href="http://www.infomeningocoque.fr" target="_blank">http://www.infomeningocoque.fr</a></p>
+        <p>3. InVS. Bilans annuels. Les infections invasives à méningocoques en 2015.</p>
+        <p>4. Gabutti SA, <em>et al.</em> Epidemiology ,of <em>Neisseria meningitidis</em> infections: case distribution by age and relevance of carriage. J Prev Med Hyg 2015;56:E116-E120.</p>
+        <p>5. Ministère des Affaires sociales et de la Santé -Avril 2017- Calendrier des vaccinations et recommandations vaccinales 2017.<br><a href="http://social-sante.gouv.fr/IMG/pdf/calendrier_vaccinations_2017.pdf" target="_blank">http://social-sante.gouv.fr/IMG/pdf/calendrier_vaccinations_2017.pdf</a>.</p>
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      <div class="container">
+        PP-VAC-FRA-0112 – 07/17 - © Tous droits réservés Pfizer SAS Année 2017 au capital de 38 200 €. RCS Paris 433 623 550 - Locataire gérant de Pfizer Holding France.
+      </div>
+    </footer>
+  </main>
 {% endblock %}
