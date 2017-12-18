@@ -1,0 +1,36 @@
+# Deploy master/
+############ Install dependencies
+pip install ansible==1.9.4
+pip install awscli
+pip install git+https://github.com/barnybug/cli53.git@python
+############ Declare some variables
+PROJECT_NAME="MM_2016_011_Picot"
+DEPLOYMENT_ENVIRONMENT="preproduction"
+APP_TLD="wrahllc.com"
+BRANCH=`echo ${CI_BRANCH} | sed 's/.*\///'`
+HOSTING_SERVER="stiglitz.${APP_TLD}"
+############ Deploy www version ############
+WWW_PREPRODUCTION="www.${PROJECT_NAME}.${DEPLOYMENT_ENVIRONMENT}"
+cli53 rrlist Z1QEWNNQKRC6Y6 | grep -q ${WWW_PREPRODUCTION} && echo "${WWW_PREPRODUCTION} already exists" || cli53 rrcreate wrahllc.com ${WWW_PREPRODUCTION} CNAME ${HOSTING_SERVER} --ttl 60 --wait --replace
+sed -i.bak s/REPLACE_APPTLD/${APP_TLD}/g deployment/www_deployment.yml
+sed -i.bak s/REPLACE_ENVIRONMENT/${DEPLOYMENT_ENVIRONMENT}/g deployment/www_deployment.yml
+sed -i.bak s/REPLACE_FQDN/${WWW_PREPRODUCTION}.wrahllc.com/g deployment/www_deployment.yml
+sed -i.bak s/REPLACE_BRANCH/${BRANCH}/g deployment/www_deployment.yml
+cd deployment
+cp hosts /tmp/hosts
+chmod ugo-x /tmp/hosts
+ansible-playbook -vvvv -i /tmp/hosts --limit preproduction www_deployment.yml
+### Up UP UP
+cd ..
+############ Deploy m version ############
+M_PREPRODUCTION="m.${PROJECT_NAME}.${DEPLOYMENT_ENVIRONMENT}"
+cli53 rrlist Z1QEWNNQKRC6Y6 | grep -q ${M_PREPRODUCTION} && echo "${M_PREPRODUCTION} already exists" || cli53 rrcreate wrahllc.com ${M_PREPRODUCTION} CNAME ${HOSTING_SERVER} --ttl 60 --wait --replace
+sed -i.bak s/REPLACE_APPTLD/${APP_TLD}/g deployment/m_deployment.yml
+sed -i.bak s/REPLACE_ENVIRONMENT/${DEPLOYMENT_ENVIRONMENT}/g deployment/m_deployment.yml
+sed -i.bak s/REPLACE_FQDN/${M_PREPRODUCTION}.wrahllc.com/g deployment/m_deployment.yml
+sed -i.bak s/REPLACE_BRANCH/${BRANCH}/g deployment/m_deployment.yml
+cd deployment
+cp hosts /tmp/hosts
+chmod ugo-x /tmp/hosts
+ansible-playbook -vvvv -i /tmp/hosts --limit preproduction m_deployment.yml
+

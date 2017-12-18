@@ -1,0 +1,97 @@
+---
+
+- hosts: all
+  gather_facts: True
+  remote_user: despleganator
+  sudo: yes
+  vars:
+    projectname: MM_2017_11_PFIZER
+    appsubdomain: www
+    deploymentenvironment: REPLACE_ENVIRONMENT
+    apptld: REPLACE_APPTLD
+    branch: REPLACE_BRANCH
+    fqdn: REPLACE_FQDN
+
+  tasks:
+    - name: Check that the server's alive
+      action: ping
+
+    # This will need to be parametrized
+
+    - name: Get release timestamp
+      command: date +%Y%m%d%H%M%S
+      register: timestamp
+
+    - name: Name release directory
+      command: echo "/var/www/{{ apptld }}/{{ projectname }}/{{ deploymentenvironment }}/{{ branch }}/{{ appsubdomain }}/releases/{{ timestamp.stdout }}"
+      register: release_path
+
+    - name: Create release directory
+      file: state=directory owner=www-data group=www-data recurse=yes path={{ release_path.stdout }}
+
+    - name: Create shared logs directory
+      file: state=directory owner=www-data group=www-data recurse=yes path=/var/www/{{ apptld }}/{{ projectname }}/{{ deploymentenvironment }}/{{ branch }}/{{ appsubdomain }}/shared/var/logs
+
+    - name: Create shared cache directory
+      file: state=directory owner=www-data group=www-data recurse=yes path=/var/www/{{ apptld }}/{{ projectname }}/{{ deploymentenvironment }}/{{ branch }}/{{ appsubdomain }}/shared/var/cache
+
+    - name: Create shared media directory
+      file: state=directory owner=www-data group=www-data recurse=yes path=/var/www/{{ apptld }}/{{ projectname }}/{{ deploymentenvironment }}/{{ branch }}/{{ appsubdomain }}/shared/var/media
+
+    #- name: Copy the database to the current release
+    #  synchronize: src=../data/swabbie.db dest={{ release_path.stdout }}
+
+    - name: Copy the files of the current subdomain  to the current release
+      synchronize: src=../{{ appsubdomain }}/ dest={{ release_path.stdout }} perms=no owner=no group=no
+
+    - name: Download and install all dependencies
+      composer: command=install working_dir={{ release_path.stdout }}
+
+    - name: Run Gulp
+      raw: cd {{ release_path.stdout }} && npm install && gulp
+
+    - name: Create the release var folder
+      file: state=directory path={{ release_path.stdout }}/var owner=www-data group=www-data
+
+    - name: Remove the gitignore from the var/logs folder
+      file: state=absent dest={{ release_path.stdout }}/var/logs src=/var/www/{{ apptld }}/{{ projectname }}/{{ deploymentenvironment }}/{{ branch }}/{{ appsubdomain }}/shared/var/logs/.gitignore
+
+    - name: Create var/logs symlink
+      file: state=link dest={{ release_path.stdout }}/var/logs src=/var/www/{{ apptld }}/{{ projectname }}/{{ deploymentenvironment }}/{{ branch }}/{{ appsubdomain }}/shared/var/logs owner=www-data group=www-data force=yes
+
+    - name: Create var/media symlink
+      file: state=link dest={{ release_path.stdout }}/web/media src=/var/www/{{ apptld }}/{{ projectname }}/{{ deploymentenvironment }}/{{ branch }}/{{ appsubdomain }}/shared/var/media owner=www-data group=www-data force=yes
+
+    - name: Remove the gitignore from the var/cache folder
+      file: state=absent dest={{ release_path.stdout }}/var/cache src=/var/www/{{ apptld }}/{{ projectname }}/{{ deploymentenvironment }}/{{ branch }}/{{ appsubdomain }}/shared/var/logs/.gitignore
+
+    - name: Create var/cache symlink
+      file: state=link dest={{ release_path.stdout }}/var/cache  src=/var/www/{{ apptld }}/{{ projectname }}/{{ deploymentenvironment }}/{{ branch }}/{{ appsubdomain }}/shared/var/cache owner=www-data group=www-data force=yes
+
+    - name: Create the symlink from the current release to the docroot of the app
+      file: state=link dest=/var/www/{{ apptld }}/{{ projectname }}/{{ deploymentenvironment }}/{{ branch }}/{{ appsubdomain }}/current src={{ release_path.stdout }} owner=www-data group=www-data
+
+    - name: Change the owner of this release to www-data
+      file: path={{ release_path.stdout }} owner=www-data group=www-data mode=0755 recurse=yes
+
+    - name: Deploy the nginx server block
+      template: src=www_serverblock.template dest=/etc/nginx/sites-available/{{ fqdn }} mode=0644
+
+    - name: Enable the nginx server block
+      action: file src=/etc/nginx/sites-available/{{ fqdn }} dest=/etc/nginx/sites-enabled/{{ fqdn }} state=link
+
+    - name: Restart phpfpm
+      raw: /etc/init.d/php5-fpm restart
+
+    - name: Restart Nginx
+      raw: /etc/init.d/nginx restart
+
+    #- name: Deploy the pool conf for this site
+
+    - name: Empty the cache folder
+      file: state=absent path=/var/www/{{ apptld }}/{{ projectname }}/{{ deploymentenvironment }}/{{ branch }}/{{ appsubdomain }}/shared/var/cache/twig
+
+    - name: Keep only the last 2 releases
+      raw: rm -fr `ls -td /var/www/{{ apptld }}/{{ projectname }}/{{ deploymentenvironment }}/{{ branch }}/{{ appsubdomain }}/releases/* | tail -n +3`
+
+
