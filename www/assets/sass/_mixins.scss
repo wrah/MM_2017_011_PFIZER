@@ -1,0 +1,43 @@
+@mixin clearfix(){
+	&:before,
+	&:after {
+	    content: " "; /* 1 */
+	    display: table; /* 2 */
+	}
+
+	&:after {
+	    clear: both;
+	}
+
+	*zoom: 1;
+}
+
+.cf{
+	@include clearfix;
+}
+
+// Font mixins
+
+@mixin CA($type, $size, $color){
+	font-size:$size;
+	color:$color;
+	@if $type == 'bold' {
+		font-family: 'ca-bold';
+	} @else if $type == 'light' {
+		font-family: 'ca-light';
+ 	} @else {
+		font-family:'ca-regular';
+ 	}
+}
+
+@mixin nunito($size, $color){
+	font-size:$size;
+	color:$color;	
+	font-family: 'Nunito';
+}
+
+@mixin arial($size, $color){
+	font-size:$size;
+	color:$color;	
+	font-family: Arial, Helvetica, sans-serif;
+}

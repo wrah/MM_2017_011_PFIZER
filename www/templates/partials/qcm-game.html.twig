@@ -1,0 +1,54 @@
+{#
+  Works with this in the mainController
+
+
+  'questions' => array(
+    array(
+      'label' => '1) Combien de rayons y-a-t\'il dans le « Monde de Bébé » :',
+      'group' => "rayon",
+      'choices' => array(
+        '3 rayons', '6 rayons', '10 rayons'
+      ), 
+      'correctChoice' => '3', 
+      'hint' => "http://courses.carrefour.fr/drive/tous-les-rayons/monde-de-bebe/PID0/154258"
+    )
+  ),
+
+#}
+
+
+<form action="{# path('infos') #}" method="POST" id="contestForm" data-parsley-validate data-parsley-errors-messages-disabled>
+  {% for question in questions %}
+    <div class="questionWrap" data-truth="#question-{{ question.group }}-answer-{{ question.correctChoice }}">
+      <p>{{ question.label | raw }}</p>
+      <ul class="radioList">
+        {% for choice in question.choices %}
+          <li>
+            <input type="radio" value="{{ choice }}" id="question-{{ question.group }}-answer-{{ loop.index }}" name="{{ question.group }}" data-parsley-required="required" >
+            <label for="question-{{ question.group }}-answer-{{ loop.index }}">{{ choice }}</label>
+          </li>
+        {% endfor %}
+      </ul>
+      {% if question.hint %}
+        <a class="reveal" target="_blank" href="{{question.hint}}">?</a>
+      {% endif %}
+    </div>
+  {% endfor %}
+
+  <div class="text-right">
+    <button type="submit" class="button blue small" href="{# path('infos') #}">Je valide</button>
+    <p class="errorMessage"></p>
+  </div>
+</form>
+<div id="congrats" class="text-center">
+  <div class="text-center form-intro">
+    <h2 class="mainTitle">Félicitations !</h2>
+    <h3 class="subtitle">Vous avez trouvé les bonnes réponses</h3>
+    <h3 class="subtitle">Remplissez le formulaire pour valider votre inscription</h3>
+  </div>
+  <a href="{# path('infos') #}" class="button red small">Je m'inscris</a>
+</div>
+
+{% block moreScripts %}
+  <script src="{{ app.request.basepath }}/js/game.js"></script>
+{% endblock %}

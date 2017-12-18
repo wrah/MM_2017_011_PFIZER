@@ -1,0 +1,33 @@
+@import "compass/css3";
+
+// Mixins
+@import "fonts";
+@import "mixins";
+@import "variables";
+@import "_parts/plugins/magnific-popup";
+
+#op-popIn{
+	margin:30px auto;
+	padding:0px;
+	max-width: 1000px;
+	background:#cee8ea;
+	border-radius: 18px;
+	overflow: hidden; 
+	> header{
+		margin-bottom: 20px;
+		img{
+			width: 100%;
+			display: block;
+		}
+	}
+	*{
+		box-sizing:border-box !important;
+	}
+	@import "compass/reset";
+	//Plugins
+	@import "_parts/plugins/flexslider";
+	//Parts
+	@import "_parts/structure";
+	@import "_parts/formUI";
+	@import "_parts/all";
+}

@@ -1,0 +1,183 @@
+#contestForm{
+  text-align:left;
+  width: 735px;
+  margin:40px auto;
+  p.errorMessage{
+    text-align:left;
+    padding-left:30px;
+    display: inline-block;
+    vertical-align: middle;
+    color:blue;
+  }
+  .center{
+    text-align:center;
+  }
+  .questionWrap{
+    @include clearfix();
+    position:relative;
+    .reveal{
+      display: block;
+      width:32px;
+      height:32px;
+      border:0px;
+      background:blue;
+      position:absolute;
+      overflow: hidden;
+      text-indent:-9999px;
+      right:40px;
+      top:50%;
+      margin-top:-15px;
+      cursor: pointer;
+      &:active, &:focus{
+        outline:0px;
+      }
+      &:hover{
+        background:red;
+      }
+    }
+    &.errors{
+      p{
+        color:red;
+      }
+    }
+  }
+  p{
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:bold;
+    font-size:15px;
+    color:#333333;
+    margin-bottom: 5px;
+    sup{
+      vertical-align: super;
+      font-size: 0.7em;
+    }
+  }
+  .radioList{
+    padding-left:55px;
+    margin:5px 0px 30px 0px;
+    li{
+      display:block;
+      line-height:15px;
+      margin-bottom:5px;
+      &.hidden{
+        display: none;
+      }
+      &.legal{
+        @include arial(13px, #A5A5A5);
+        font-style: italic;
+        padding-left: 25px;
+      }
+      label{
+        font-family:Arial, Helvetica, sans-serif;
+        font-size:15px;
+        color:#333333;
+        &.correct{
+          color:#e6007e;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  &#validateForm{
+    margin:50px 0px 30px 0px;
+    .tightCenter{
+      width:330px;
+      margin:0 auto;
+      > label{
+        display:inline-block;
+        width:137px;
+        position:relative;
+        font-family:Arial, Helvetica, sans-serif;
+        font-weight:bold;
+        font-size:12px;
+        color:#333333;
+        line-height:25px;
+        margin:3px 0px 0px;
+        &:after{
+          content:":";
+          position:absolute;
+          right:0px;
+          bottom:0px;
+        }
+      }
+      > input, select{
+        width:180px;
+        margin:3px 0px 0px;
+        margin-left:9px;
+        height:25px;
+        @include border-radius(4px);
+        border:1px solid #b9b9b9;
+        font-family:Arial, Helvetica, sans-serif;
+        font-size:12px;
+        color:#333333;
+        &.short{
+          width:60px;
+        }
+      }
+      .parsley-errors-list.filled li{
+        text-align:left;
+        color:#e6007e;
+        font-family:Arial, Helvetica, sans-serif;
+        font-size:14px;
+        margin:2px 0px 4px 149px;
+      }
+      #errorWrap{
+        .parsley-errors-list.filled li{
+          text-align: center;
+          margin:0px;
+        }
+      }
+    }
+    .boxes{
+      margin:5px 0px 30px 0px;
+      > input{
+        margin:0 10px;
+      }
+      label{
+        font-family:Arial, Helvetica, sans-serif;
+        font-size:13px;
+        color:#000;
+        a{
+          color:#281e68;
+          font-weight: bold;
+        }
+      }
+      hr{
+        border:0px;
+        margin:10px 0px;
+      }
+    }
+    .legal{
+      width:500px;
+      margin:0 auto 30px auto;
+      color:#5a5a5a;
+      font-size:12px;
+      font-weight:normal;
+      text-align: center;
+      line-height: 1.3;
+    }
+    input[type="submit"]{
+      display:inline-block;
+      width:310px;
+      background:blue center center no-repeat;
+    }
+  }
+
+}
+
+#congrats{
+  padding:130px 0px;
+  display: none;
+  .form-intro{
+    .subtitle{
+      margin-bottom: 10px;
+    }
+  }
+  .button{
+    margin:30px auto;
+  }
+  .legal{
+    @include arial(13px, #000);
+  }
+}

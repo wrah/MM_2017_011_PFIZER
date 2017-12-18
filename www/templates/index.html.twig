@@ -1,0 +1,12 @@
+{% extends "layouts/layout.html.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div id="op-popIn">
+  <header>
+    <img src="{{app.request.basepath}}/images/header.png" alt="" />
+  </header>
+  {% include "partials/form-partial.html.twig" %}
+</div>
+{% endblock %}
