@@ -34,7 +34,7 @@ class MainController implements ControllerProviderInterface
   /*
   static public function articleAction(Application $application, $gmcHeader, $articleSlug)
   {
-    $mc2mRubricId = "2007366";
+    $mc2mRubricId = "2007421";
     if(!$gmcHeader)
     {
         $header = file_get_contents("http://www.magicmaman.com/chunk/top/". $mc2mRubricId);
@@ -73,7 +73,7 @@ class MainController implements ControllerProviderInterface
   
   static public function indexAction(Application $application, $gmcHeader)
   {
-    $mc2mRubricId = "2007366";
+    $mc2mRubricId = "2007421";
     if(!$gmcHeader)
     {
         $header = file_get_contents("http://www.magicmaman.com/chunk/top/". $mc2mRubricId);
