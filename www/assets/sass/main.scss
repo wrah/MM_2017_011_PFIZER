@@ -97,6 +97,7 @@ sub {
 
 sup {
     top: -.5em
+    font-size: 70%;
 }
 
 audio,
@@ -709,7 +710,8 @@ body {
     z-index: 1;
     margin-top: 30px;
     margin-left: -20px;
-    padding: 15px;
+    /*padding: 15px;*/
+    padding: 4px;
     color: #42bfb9
 }
 
